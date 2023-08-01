@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:git_hub_api/model/api_service.dart';
+import 'package:git_hub_api/mainscreen.dart';
+import 'package:sizer/sizer.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,25 +11,14 @@ class MyApp extends StatelessWidget {
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {   
-    return const MaterialApp(
-      home: HomePage(),
-    );
-  }
-}
-
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  
-
-  @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Sizer(
+      builder: (context, orientation, deviceType) {
+        return const MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: HomePage(),
+        );
+      },
+    );
   }
 }
