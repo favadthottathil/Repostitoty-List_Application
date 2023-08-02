@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:git_hub_api/constants/constants.dart';
 import 'package:git_hub_api/model/api_service.dart';
 import 'package:sizer/sizer.dart';
@@ -128,4 +127,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+
+  
 }
