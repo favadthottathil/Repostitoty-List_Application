@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:git_hub_api/Database/sqflite_db.dart';
 import 'package:git_hub_api/model/github_repository.dart';
 import 'package:http/http.dart' as http;
 
@@ -16,13 +15,11 @@ class GithubRepositoryApi {
 
         final List data = json['items'];
 
-        print(data);
+        
 
         List<GithubRepository> allDataList = data.map((item) => GithubRepository.fromJson(item)).toList();
 
-        for (var element in allDataList) {
-        print(' name == ${element.name} fullname == ${element.fullName} des == ${element.description} star ==  ${element.stargazersCount}  avathar == ${element.owner.avatarUrl}   ////////////////\\\\\\\\');
-      }
+        
 
         return allDataList;
       } else {

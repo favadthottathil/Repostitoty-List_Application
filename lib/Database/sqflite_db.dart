@@ -1,9 +1,6 @@
 import 'dart:developer';
-import 'dart:io';
-
 import 'package:git_hub_api/model/db_model.dart';
 import 'package:git_hub_api/model/github_repository.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -24,15 +21,6 @@ class GithubRepositoryDatabase {
     return db;
   }
 
-//   Future<void> _onCreate(Database db, int version) async {
-//     await db.execute('''
-//    CREATE TABLE github_repositories (
-//      id INTEGER PRIMARY KEY AUTOINCREMENT,
-//      GithubData JSON NOT NULL,
-//      )
-// ''');
-//   }
-
   Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
    CREATE TABLE github_repositories (
@@ -46,7 +34,7 @@ class GithubRepositoryDatabase {
 ''');
   }
 
- Future insertGithubRepository(List<GithubRepository> allDataList) async {
+  Future insertGithubRepository(List<GithubRepository> allDataList) async {
     try {
       final db = await database;
 
@@ -75,18 +63,6 @@ class GithubRepositoryDatabase {
       }
 
       log('data added successfully');
-
-      // allDataList.map((repo) async {
-      //   await db.insert('github_repositories', {
-      //     'name': repo.name,
-      //     'fullName': repo.fullName,
-      //     'description': repo.description,
-      //     'stargazersCount': repo.stargazersCount,
-      //     'avatarUrl': repo.owner.avatarUrl,
-      //   });
-      // }).toList();
-
-      // log('db success === $allData');
     } catch (e) {
       log(e.toString());
     }
@@ -99,14 +75,6 @@ class GithubRepositoryDatabase {
     print(await isTableExists('github_repositories'));
   }
 
-  // Future<List<GithubRepository>> getGithubRepositories() async {
-  //   final Database db = await database;
-
-  //   final List<Map<String, dynamic>> maps = await db.query('github_repositories');
-
-  //   return maps.map((map) => GithubRepository.fromMap(map)).toList();
-  // }
-
   Future<List<Db>> getDataFromDb() async {
     try {
       final db = await database;
@@ -118,17 +86,9 @@ class GithubRepositoryDatabase {
 
       final alldata = await db.query('github_repositories');
 
-      print(alldata);
-
       final dbData = alldata.map((e) => Db.fromJson(e)).toList();
 
       return dbData;
-
-      // return List.generate(alldata.length, (index) {
-      //   return GithubRepository.fromMap(alldata[index]);
-      // });
-
-      // List<GithubRepository> githubData = allDataList.map((item) => GithubRepository.fromJson(item)).toList();
     } catch (e) {
       log(e.toString());
 
