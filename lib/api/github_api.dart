@@ -1,27 +1,35 @@
 import 'dart:convert';
+import 'package:git_hub_api/Database/sqflite_db.dart';
 import 'package:git_hub_api/model/github_repository.dart';
 import 'package:http/http.dart' as http;
 
 class GithubRepositoryApi {
   String apiEndPoint = 'https://api.github.com/search/repositories?q=created:>2023-09-04&sort=stars&order=desc';
+  Future<List<GithubRepository>> getData(int currentPage) async {
+    try {
+      Uri url = Uri.parse('$apiEndPoint&page=$currentPage&per_page=10');
 
-  Future<List<GithubRepository>> getData() async {
-    Uri url = Uri.parse(apiEndPoint);
+      final response = await http.get(url);
 
-    final response = await http.get(url);
+      if (response.statusCode == 200) {
+        final json = jsonDecode(response.body);
 
-    if (response.statusCode == 200) {
-      final json = jsonDecode(response.body);
+        final List data = json['items'];
 
+        print(data);
 
+        List<GithubRepository> allDataList = data.map((item) => GithubRepository.fromJson(item)).toList();
 
-      final List data = json['items'];
+        for (var element in allDataList) {
+        print(' name == ${element.name} fullname == ${element.fullName} des == ${element.description} star ==  ${element.stargazersCount}  avathar == ${element.owner.avatarUrl}   ////////////////\\\\\\\\');
+      }
 
-      List<GithubRepository> githubData = data.map((item) => GithubRepository.fromJson(item)).toList();
-
-      return githubData;
-    } else {
-      throw Exception("can't get data from api");
+        return allDataList;
+      } else {
+        throw Exception("can't get data from api");
+      }
+    } catch (e) {
+      throw ('api error $e');
     }
   }
 }
